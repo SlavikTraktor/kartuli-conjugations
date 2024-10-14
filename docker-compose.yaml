@@ -1,0 +1,12 @@
+version: '2.4'
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5434:5432
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=S3cretPasssword
+      - POSTGRES_USER=test
+      - POSTGRES_DB=test

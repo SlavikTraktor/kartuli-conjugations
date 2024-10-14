@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Test {
+  id  Int    @id @default(autoincrement())
+  kek String
+}
+
+model Word {
+  id    Int           @id @default(autoincrement())
+  words Conjugation[]
+}
+
+model ConjugationCategory {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique 
+  conjugation Conjugation[]
+}
+
+model Conjugation {
+  id                      Int                 @id @default(autoincrement())
+  value                   String
+  wordId                  Int
+  word                    Word                @relation(fields: [wordId], references: [id])
+  conjugationCategorySlug String
+  conjugationCategory     ConjugationCategory @relation(fields: [conjugationCategorySlug], references: [slug])
+  translation             ConjugationTranslation?
+}
+
+model Language {
+  slug                   String @id
+  conjugationTranslation ConjugationTranslation[]
+}
+
+model ConjugationTranslation {
+  id            Int      @id @default(autoincrement())
+  lang          String
+  language      Language @relation(fields: [lang], references: [slug])
+  value         String
+  conjugationId Int @unique
+  conjugation   Conjugation @relation(fields: [conjugationId], references: [id])
+}
