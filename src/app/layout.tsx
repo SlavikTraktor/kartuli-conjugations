@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Search } from "@/components/Search";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,7 +28,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased p-10`}
       >
-        <Search />
         {children}
       </body>
     </html>

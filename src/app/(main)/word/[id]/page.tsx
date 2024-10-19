@@ -41,7 +41,7 @@ export default async function Word({ params }: { params: { id: string } }) {
       <h1>Word {params.id}</h1>
       {main && (
         <div>
-          {main.value} - {main.translation?.value}
+          {main.value} - <span className="text-amber-600">{main.translation?.value}</span>
         </div>
       )}
       <div className="flex flex-wrap gap-4">

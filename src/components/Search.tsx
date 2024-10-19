@@ -2,9 +2,11 @@
 import { AutoComplete, AutoCompleteProps } from "antd";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { isKartuliString } from "@/helpers/isKartuliString";
 
 export const Search = () => {
   const [options, setOptions] = useState<AutoCompleteProps["options"]>([]);
+  const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -25,20 +27,32 @@ export const Search = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const resOptions = resBody.map((v: any) => ({
       label: (
-        <div>
+        <div key={v.conjugation}>
           <span className="mr-4">{v.conjugation}</span>
           <span className="text-amber-600">{v.translation}</span>
         </div>
       ),
-      value: v.wordId,
+      value: v.conjugation,
+      initialData: v,
     }));
     setIsLoading(false);
     // const opts = optionsRaw.filter((v) => (v.value as string).includes(search));
     setOptions(resOptions);
   };
 
-  const onSelect = (v: number) => {
-    router.push(`/word/${v}`);
+  const onSelect = (v: string, v2) => {
+    router.push(`/word/${v2.initialData.wordId}`);
+    const isKartuli = isKartuliString(value);
+    setValue(isKartuli ? v : v2.initialData.translation);
   };
-  return <AutoComplete onSearch={onSearch} onSelect={onSelect} options={options} className="w-80 mb-10" />;
+  return (
+    <AutoComplete
+      value={value}
+      onChange={(v) => setValue(v)}
+      onSearch={onSearch}
+      onSelect={onSelect}
+      options={options}
+      className="w-80 mb-10"
+    />
+  );
 };

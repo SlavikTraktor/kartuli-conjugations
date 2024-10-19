@@ -1,4 +1,4 @@
-import { kartuliAlphabet } from "@/consts/kartuliAlphabet";
+import { isKartuliString } from "@/helpers/isKartuliString";
 import { prisma } from "@/lib/prisma";
 
 interface SearchResult {
@@ -9,7 +9,7 @@ interface SearchResult {
 
 export async function POST(request: Request) {
   const { search } = await request.json();
-  const isKartuli = kartuliAlphabet.split("").some((v) => search.includes(v));
+  const isKartuli = isKartuliString(search);
 
   if (isKartuli) {
     const searchResult = await prisma.conjugation.findMany({
