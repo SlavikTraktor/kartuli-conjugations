@@ -20,7 +20,7 @@ model Test {
 
 model Word {
   id    Int           @id @default(autoincrement())
-  words Conjugation[]
+  conjugations Conjugation[]
 }
 
 model ConjugationCategory {
@@ -36,7 +36,7 @@ model Conjugation {
   word                    Word                @relation(fields: [wordId], references: [id])
   conjugationCategorySlug String
   conjugationCategory     ConjugationCategory @relation(fields: [conjugationCategorySlug], references: [slug])
-  translation             ConjugationTranslation?
+  translations             ConjugationTranslation[]
 }
 
 model Language {
@@ -49,6 +49,8 @@ model ConjugationTranslation {
   lang          String
   language      Language @relation(fields: [lang], references: [slug])
   value         String
-  conjugationId Int @unique
+  conjugationId Int
   conjugation   Conjugation @relation(fields: [conjugationId], references: [id])
+
+  @@unique([lang, conjugationId])
 }

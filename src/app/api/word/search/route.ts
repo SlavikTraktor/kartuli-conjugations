@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       take: 8,
       include: {
         word: true,
-        translation: true,
+        translations: true,
       },
       orderBy: {
         id: "asc"
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
     const res: SearchResult[] = searchResult.map((v) => ({
       conjugation: v.value,
-      translation: v.translation?.value,
+      translation: v.translations[0]?.value,
       wordId: v.wordId,
     }));
     return Response.json(res);

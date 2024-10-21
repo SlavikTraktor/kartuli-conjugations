@@ -40,7 +40,7 @@ export const Search = () => {
     setOptions(resOptions);
   };
 
-  const onSelect = (v: string, v2) => {
+  const onSelect = (v: string, v2: any) => {
     router.push(`/word/${v2.initialData.wordId}`);
     const isKartuli = isKartuliString(value);
     setValue(isKartuli ? v : v2.initialData.translation);

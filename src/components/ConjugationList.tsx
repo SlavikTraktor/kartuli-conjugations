@@ -17,8 +17,8 @@ export const ConjugationList = ({ dataSource, name = "Present" }: ConjugationLis
       <List.Item>
         <div className="flex w-full flex-wrap">
           <div className="min-w-14">{getPerson(item.category)}</div>
-          <div className="flex-1 min-w-24">{item.data.value}</div>
-          <div className="flex-1 min-w-24 text-amber-600">{item.data.translation?.value}</div>
+          <div className="flex-1 min-w-24">{item.data?.value}</div>
+          <div className="flex-1 min-w-24 text-amber-600">{item.data?.translations[0]?.value}</div>
         </div>
       </List.Item>
     ),
